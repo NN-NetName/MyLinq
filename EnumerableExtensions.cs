@@ -27,5 +27,20 @@ namespace MuLinq
 
             throw new InvalidOperationException();
         }
+        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source)
+        {
+            foreach (var item in source)
+                return item;
+
+            return default(TSource);
+        }
+        public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source, Predicate<TSource> criterion)
+        {
+            foreach (var item in source)
+                if (criterion?.Invoke(item) is true)
+                    return item;
+
+            return default(TSource);
+        }
     }
 }

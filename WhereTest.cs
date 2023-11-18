@@ -59,7 +59,32 @@ namespace MyLinq.Tests
         {
             var array = Array.Empty<int>();
             Assert.Throws<InvalidOperationException>(() => array.First());
+        }
+        public void CollectionWithElements_FirstOrDefault_Success()
+        {
+            var array = new[] { 1, 2, 3 };
 
+            var result = array.FirstOrDefault();
+
+            Assert.Equal(1, result);
+        }
+        [Fact]
+        public void NonCollectionWithElements_FirstOrDefaultWithCriteria_Success()
+        {
+            var array = new[] { 1, 2, 3 };
+
+            var result = array.FirstOrDefault(array => array == 3);
+
+            Assert.Equal(3, result);
+        }
+        [Fact]
+        public void NonCollectionWithElements_FirstOrDefaultWithCriteria_NonMatchingElemnt_ReturnsDefault()
+        {
+            var array = new[] { 1, 2, 3 };
+
+            var result = array.FirstOrDefault(array => array == 33);
+
+            Assert.Equal(0, result);
         }
     }
 }
